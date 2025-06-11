@@ -1,0 +1,39 @@
+spring:
+  application:
+    name: notification
+
+  datasource:
+    url: jdbc:postgresql://${ENV_DB_HOST:localhost}:${ENV_DB_PORT:5432}/${ENV_DB_NAME:matchlent}?currentSchema=${ENV_DB_SCHEMA:matchlent-db}&useUnicode=true&sslmode=disable&serverTimezone=UTC
+    username: ${ENV_DB_USERNAME:postgres}
+    password: ${ENV_DB_PASSWORD:123}
+    driver-class-name: org.postgresql.Driver
+
+aws:
+  ses:
+    smtp:
+      username: ${ENV_AWS_SES_SMTP_USERNAME:}
+      password: ${ENV_AWS_SES_SMTP_PASSWORD:}
+      host: ${ENV_AWS_SES_SMTP_HOST:}
+      port: ${ENV_AWS_SES_SMTP_PORT:}
+      from: ${ENV_AWS_SES_SMTP_FROM:}
+      sender-name: ${ENV_AWS_SES_SMTP_SENDER_NAME:}
+      callback-url: ${ENV_AWS_SES_SMTP_CALLBACK_URL:}
+
+camel:
+  component:
+    kafka:
+      brokers: ${ENV_KAFKA_BROKERS:localhost:9092}
+      group-id: ${ENV_KAFKA_GROUP_ID:email-group}
+    aws2-ses:
+      access-key: ${ENV_AWS_ACCESS_KEY:}
+      secret-key: ${ENV_AWS_SECRET_KEY:}
+      region: ${ENV_AWS_REGION:us-west-1}
+
+kafka:
+  topics:
+    email: ${ENV_KAFKA_TOPIC_EMAIL:email-topic}
+    notification: ${ENV_KAFKA_TOPIC_NOTIFICATION:notification-topic}
+
+logging:
+  level:
+    org.apache.camel: INFO
