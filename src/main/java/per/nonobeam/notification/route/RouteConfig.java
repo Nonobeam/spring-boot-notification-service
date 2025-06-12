@@ -19,6 +19,7 @@ public class RouteConfig extends RouteBuilder {
     from(kafkaConfig.toUri())
             .unmarshal().json(MailMessage.class)
             .process(mailHeaderMapper::map)
-            .to("aws2-ses://default");
+            .to("aws2-ses://default")
+            .log("Send email ${body} successfully to ${header.CamelAwsSesTo} with subject ${header.CamelAwsSesSubject}");
   }
 }

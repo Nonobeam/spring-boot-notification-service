@@ -22,7 +22,7 @@ aws:
 camel:
   component:
     kafka:
-      brokers: ${ENV_KAFKA_BROKERS:localhost:9092}
+      brokers: ${ENV_KAFKA_BROKERS:localhost:29092}
       group-id: ${ENV_KAFKA_GROUP_ID:email-group}
     aws2-ses:
       access-key: ${ENV_AWS_ACCESS_KEY:}
