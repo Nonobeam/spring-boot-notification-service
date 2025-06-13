@@ -6,9 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Data
 @Component
-@ConfigurationProperties("kafka.topics")
-public class KafkaSetting {
-  private String email;
-  private String notification;
-  private String dlq;
+@ConfigurationProperties("app")
+public class AppSetting {
+  private boolean enableJsonLog;
 }

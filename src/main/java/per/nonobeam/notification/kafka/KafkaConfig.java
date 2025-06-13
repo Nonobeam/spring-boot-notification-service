@@ -11,18 +11,25 @@ import per.nonobeam.notification.settings.KafkaSetting;
 @Service
 @RequiredArgsConstructor
 public class KafkaConfig {
-    private final KafkaSetting kafkaSetting;
+  private final KafkaSetting kafkaSetting;
 
-    @Bean
-    public String kafkaUri() {
-        String topic = kafkaSetting.getEmail();
-        var value = String.format(CamelConstant.FROM_KAFKA_TEMPLATE, topic);
-        log.info("Listening to Kafka topic: {}", value);
-        return value;
-    }
+  private String kafkaUri;
+  private String dlqUri;
 
-    public String toUri() {
-        String topic = kafkaSetting.getEmail();
-        return String.format(CamelConstant.FROM_KAFKA_TEMPLATE, topic);
-    }
+  @Bean
+  public String kafkaUri() {
+    kafkaUri = String.format(CamelConstant.FROM_KAFKA_TEMPLATE, kafkaSetting.getEmail());
+    dlqUri = String.format(CamelConstant.FROM_KAFKA_TEMPLATE, kafkaSetting.getDlq());
+    log.info("Listening to Kafka topic: {}", kafkaUri);
+    log.info("Publishing to Kafka DLQ topic: {}", dlqUri);
+    return kafkaUri;
+  }
+
+  public String toMailUri() {
+    return this.kafkaUri;
+  }
+
+  public String toDlqUri() {
+    return this.dlqUri;
+  }
 }
